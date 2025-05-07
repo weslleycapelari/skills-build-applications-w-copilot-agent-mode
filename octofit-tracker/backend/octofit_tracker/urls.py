@@ -22,28 +22,17 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
-from octofit import views
+from octofit.views import UserViewSet, TeamViewSet, ActivityViewSet, WorkoutViewSet, LeaderboardViewSet, api_root
 
-@api_view(['GET'])
-def api_root(request, format=None):
-    return Response({
-        'users': reverse('user-list', request=request, format=format),
-        'teams': reverse('team-list', request=request, format=format),
-        'activities': reverse('activity-list', request=request, format=format),
-        'workouts': reverse('workout-list', request=request, format=format),
-        'leaderboard': reverse('leaderboard-list', request=request, format=format),
-    })
+router = routers.DefaultRouter()
+router.register(r'users', UserViewSet, basename='user')
+router.register(r'teams', TeamViewSet, basename='team')
+router.register(r'activities', ActivityViewSet, basename='activity')
+router.register(r'workouts', WorkoutViewSet, basename='workout')
+router.register(r'leaderboard', LeaderboardViewSet, basename='leaderboard')
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path('admin/', admin.site.urls),
     path('', api_root, name='api-root'),
-    path('users/', views.UserListCreateView.as_view(), name='user-list'),
-    path('users/<str:pk>/', views.UserRetrieveUpdateDestroyView.as_view(), name='user-detail'),
-    path('teams/', views.TeamListCreateView.as_view(), name='team-list'),
-    path('teams/<str:pk>/', views.TeamRetrieveUpdateDestroyView.as_view(), name='team-detail'),
-    path('activities/', views.ActivityListCreateView.as_view(), name='activity-list'),
-    path('activities/<str:pk>/', views.ActivityRetrieveUpdateDestroyView.as_view(), name='activity-detail'),
-    path('workouts/', views.WorkoutListCreateView.as_view(), name='workout-list'),
-    path('workouts/<str:pk>/', views.WorkoutRetrieveUpdateDestroyView.as_view(), name='workout-detail'),
-    path('leaderboard/', views.LeaderboardListView.as_view(), name='leaderboard-list'),
+    path('api/', include(router.urls)),
 ]
