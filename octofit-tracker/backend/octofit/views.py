@@ -30,27 +30,10 @@ class LeaderboardViewSet(viewsets.ReadOnlyModelViewSet):
 @api_view(['GET'])
 def api_root(request, format=None):
     codespace_url = 'https://curly-garbanzo-xrgxp7p7rpr2975p-8000.app.github.dev/'
-    localhost_url = 'http://localhost:8000/'
-    # Retorna ambos os endpoints para facilitar testes locais e via Codespace
     return Response({
-        'users': {
-            'codespace': codespace_url + 'api/users/?format=api',
-            'localhost': localhost_url + 'api/users/?format=api',
-        },
-        'teams': {
-            'codespace': codespace_url + 'api/teams/?format=api',
-            'localhost': localhost_url + 'api/teams/?format=api',
-        },
-        'activities': {
-            'codespace': codespace_url + 'api/activities/?format=api',
-            'localhost': localhost_url + 'api/activities/?format=api',
-        },
-        'leaderboard': {
-            'codespace': codespace_url + 'api/leaderboard/?format=api',
-            'localhost': localhost_url + 'api/leaderboard/?format=api',
-        },
-        'workouts': {
-            'codespace': codespace_url + 'api/workouts/?format=api',
-            'localhost': localhost_url + 'api/workouts/?format=api',
-        },
+        'users': codespace_url + 'api/users/?format=api',
+        'teams': codespace_url + 'api/teams/?format=api',
+        'activities': codespace_url + 'api/activities/?format=api',
+        'leaderboard': codespace_url + 'api/leaderboard/?format=api',
+        'workouts': codespace_url + 'api/workouts/?format=api',
     })
