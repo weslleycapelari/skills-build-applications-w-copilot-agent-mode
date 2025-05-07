@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "octofit",  # registra o app octofit
+    "djongo",  # Adiciona o engine djongo para MongoDB
 ]
 
 MIDDLEWARE = [
